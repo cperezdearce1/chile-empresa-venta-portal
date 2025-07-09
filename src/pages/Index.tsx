@@ -2,9 +2,32 @@
 import React, { useEffect, useState } from 'react';
 import { Phone, Shield, Users, FileText, TrendingUp, Mail, MapPin, ChevronDown, Menu, X, MessageCircle } from 'lucide-react';
 
+interface FormData {
+  nombre: string;
+  email: string;
+  telefono: string;
+  empresa: string;
+  sector: string;
+  empleados: string;
+  ventas: string;
+  timing: string;
+  descripcion: string;
+}
+
+interface FormErrors {
+  nombre?: string;
+  email?: string;
+  telefono?: string;
+  empresa?: string;
+  sector?: string;
+  empleados?: string;
+  ventas?: string;
+  timing?: string;
+}
+
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<FormData>({
     nombre: '',
     email: '',
     telefono: '',
@@ -15,7 +38,7 @@ const Index = () => {
     timing: '',
     descripcion: ''
   });
-  const [formErrors, setFormErrors] = useState({});
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
 
   useEffect(() => {
     // Scroll-triggered animations
@@ -39,17 +62,17 @@ const Index = () => {
     return () => observer.disconnect();
   }, []);
 
-  const validateEmail = (email) => {
+  const validateEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const validatePhone = (phone) => {
+  const validatePhone = (phone: string) => {
     return /^(\+56|56)?[2-9]\d{8}$/.test(phone.replace(/\s/g, ''));
   };
 
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const errors = {};
+    const errors: FormErrors = {};
 
     // Validaciones
     if (!formData.nombre.trim()) errors.nombre = 'Nombre requerido';
@@ -82,11 +105,11 @@ const Index = () => {
     }
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
     // Limpiar error al escribir
-    if (formErrors[name]) {
+    if (formErrors[name as keyof FormErrors]) {
       setFormErrors(prev => ({ ...prev, [name]: '' }));
     }
   };
@@ -103,10 +126,10 @@ const Index = () => {
             
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8">
-              <a href="#inicio" className="hover:text-purple-400 transition-colors">Inicio</a>
-              <a href="#beneficios" className="hover:text-purple-400 transition-colors">Beneficios</a>
-              <a href="#proceso" className="hover:text-purple-400 transition-colors">Proceso</a>
-              <a href="#contacto" className="hover:text-purple-400 transition-colors">Contacto</a>
+              <a href="#inicio" className="hover:text-purple-400 transition-colors duration-500">Inicio</a>
+              <a href="#beneficios" className="hover:text-purple-400 transition-colors duration-500">Beneficios</a>
+              <a href="#proceso" className="hover:text-purple-400 transition-colors duration-500">Proceso</a>
+              <a href="#contacto" className="hover:text-purple-400 transition-colors duration-500">Contacto</a>
             </nav>
 
             {/* Mobile Menu Button */}
@@ -122,10 +145,10 @@ const Index = () => {
           {isMenuOpen && (
             <nav className="md:hidden mt-4 pb-4 border-t border-gray-800 pt-4">
               <div className="flex flex-col space-y-4">
-                <a href="#inicio" className="hover:text-purple-400 transition-colors">Inicio</a>
-                <a href="#beneficios" className="hover:text-purple-400 transition-colors">Beneficios</a>
-                <a href="#proceso" className="hover:text-purple-400 transition-colors">Proceso</a>
-                <a href="#contacto" className="hover:text-purple-400 transition-colors">Contacto</a>
+                <a href="#inicio" className="hover:text-purple-400 transition-colors duration-500">Inicio</a>
+                <a href="#beneficios" className="hover:text-purple-400 transition-colors duration-500">Beneficios</a>
+                <a href="#proceso" className="hover:text-purple-400 transition-colors duration-500">Proceso</a>
+                <a href="#contacto" className="hover:text-purple-400 transition-colors duration-500">Contacto</a>
               </div>
             </nav>
           )}
@@ -151,9 +174,9 @@ const Index = () => {
           </p>
           
           <button 
-            onClick={() => document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' })}
+            onClick={() => document.getElementById('contacto')?.scrollIntoView({ behavior: 'smooth' })}
             className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 
-                     px-8 py-4 rounded-full text-lg font-semibold transition-all duration-300 
+                     px-8 py-4 rounded-full text-lg font-semibold transition-all duration-700
                      transform hover:scale-105 shadow-lg hover:shadow-purple-500/25"
           >
             Quiero que me contacten
@@ -209,9 +232,9 @@ const Index = () => {
             ].map((benefit, index) => (
               <div key={index} className="group animate-on-scroll">
                 <div className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-6 h-full 
-                              transition-all duration-300 hover:bg-gray-800/70 hover:border-purple-500/50 
+                              transition-all duration-700 hover:bg-gray-800/70 hover:border-purple-500/50 
                               hover:transform hover:scale-105">
-                  <div className="text-purple-400 mb-4 group-hover:text-purple-300 transition-colors">
+                  <div className="text-purple-400 mb-4 group-hover:text-purple-300 transition-colors duration-500">
                     {benefit.icon}
                   </div>
                   <h3 className="text-xl font-semibold mb-3">{benefit.title}</h3>
@@ -316,7 +339,7 @@ const Index = () => {
                     name="nombre"
                     value={formData.nombre}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors duration-500"
                   />
                   {formErrors.nombre && <p className="text-red-400 text-sm mt-1">{formErrors.nombre}</p>}
                 </div>
@@ -328,7 +351,7 @@ const Index = () => {
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors duration-500"
                   />
                   {formErrors.email && <p className="text-red-400 text-sm mt-1">{formErrors.email}</p>}
                 </div>
@@ -342,7 +365,7 @@ const Index = () => {
                     name="telefono"
                     value={formData.telefono}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors duration-500"
                   />
                   {formErrors.telefono && <p className="text-red-400 text-sm mt-1">{formErrors.telefono}</p>}
                 </div>
@@ -354,7 +377,7 @@ const Index = () => {
                     name="empresa"
                     value={formData.empresa}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors duration-500"
                   />
                   {formErrors.empresa && <p className="text-red-400 text-sm mt-1">{formErrors.empresa}</p>}
                 </div>
@@ -368,7 +391,7 @@ const Index = () => {
                       name="sector"
                       value={formData.sector}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors appearance-none"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors duration-500 appearance-none"
                     >
                       <option value="">Selecciona un sector</option>
                       <option value="manufactura">Manufactura</option>
@@ -391,7 +414,7 @@ const Index = () => {
                       name="empleados"
                       value={formData.empleados}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors appearance-none"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors duration-500 appearance-none"
                     >
                       <option value="">Selecciona cantidad</option>
                       <option value="1-10">1-10</option>
@@ -413,7 +436,7 @@ const Index = () => {
                       name="ventas"
                       value={formData.ventas}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors appearance-none"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors duration-500 appearance-none"
                     >
                       <option value="">Selecciona rango</option>
                       <option value="menos-100mm">Menos de $100MM</option>
@@ -433,7 +456,7 @@ const Index = () => {
                       name="timing"
                       value={formData.timing}
                       onChange={handleInputChange}
-                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors appearance-none"
+                      className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors duration-500 appearance-none"
                     >
                       <option value="">Selecciona timing</option>
                       <option value="este-ano">Este año</option>
@@ -454,7 +477,7 @@ const Index = () => {
                   value={formData.descripcion}
                   onChange={handleInputChange}
                   rows={4}
-                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors resize-vertical"
+                  className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg focus:border-purple-500 focus:outline-none transition-colors duration-500 resize-vertical"
                   placeholder="Describe brevemente tu empresa, qué la hace especial, logros destacados, etc."
                 ></textarea>
               </div>
@@ -462,7 +485,7 @@ const Index = () => {
               <button
                 type="submit"
                 className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 
-                         px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-300 
+                         px-8 py-4 rounded-lg text-lg font-semibold transition-all duration-700
                          transform hover:scale-105 shadow-lg hover:shadow-purple-500/25"
               >
                 Enviar solicitud de contacto
@@ -523,7 +546,7 @@ const Index = () => {
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full 
-                 shadow-lg transition-all duration-300 transform hover:scale-110 z-50 animate-pulse"
+                 shadow-lg transition-all duration-1000 transform hover:scale-110 z-50"
       >
         <MessageCircle size={24} />
       </a>
