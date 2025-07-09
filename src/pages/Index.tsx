@@ -1,6 +1,6 @@
-
 import React, { useEffect, useState } from 'react';
 import { Phone, Shield, Users, FileText, TrendingUp, Mail, MapPin, ChevronDown, Menu, X, MessageCircle } from 'lucide-react';
+import Logo from '../components/Logo';
 
 interface FormData {
   nombre: string;
@@ -114,15 +114,17 @@ const Index = () => {
     }
   };
 
+  const handleLogoClick = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-gray-900 text-white">
       {/* Header */}
       <header className="fixed top-0 w-full z-50 backdrop-blur-md bg-gray-900/80 border-b border-gray-800">
         <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
-            <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
-              CompraEmpresas.cl
-            </div>
+            <Logo onClick={handleLogoClick} />
             
             {/* Desktop Navigation */}
             <nav className="hidden md:flex space-x-8">
@@ -500,9 +502,7 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
-              <div className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent mb-4">
-                CompraEmpresas.cl
-              </div>
+              <Logo className="mb-4" />
               <p className="text-gray-300">
                 Compramos empresas exitosas en Chile con un proceso transparente y profesional.
               </p>
@@ -513,7 +513,7 @@ const Index = () => {
               <div className="space-y-2 text-gray-300">
                 <div className="flex items-center gap-2">
                   <Mail size={16} />
-                  contacto@compraempresas.cl
+                  contacto@atlaspartners.cl
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone size={16} />
@@ -532,7 +532,7 @@ const Index = () => {
                 <p>Política de Privacidad</p>
                 <p>Términos y Condiciones</p>
                 <p className="text-sm text-gray-400 mt-4">
-                  © 2024 CompraEmpresas.cl - Todos los derechos reservados
+                  © 2024 Atlas Partners - Todos los derechos reservados
                 </p>
               </div>
             </div>
