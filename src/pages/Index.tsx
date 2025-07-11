@@ -532,7 +532,7 @@ const Index = () => {
                 <p>Política de Privacidad</p>
                 <p>Términos y Condiciones</p>
                 <p className="text-sm text-gray-400 mt-4">
-                  © 2024 Atlas Partners - Todos los derechos reservados
+                  © 2025 Atlas Partners - Todos los derechos reservados
                 </p>
               </div>
             </div>
