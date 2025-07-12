@@ -70,7 +70,7 @@ const Index = () => {
     return /^(\+56|56)?[2-9]\d{8}$/.test(phone.replace(/\s/g, ''));
   };
 
-  const handleFormSubmit = (e: React.FormEvent) => {
+  const handleFormSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const errors: FormErrors = {};
 
@@ -89,19 +89,28 @@ const Index = () => {
     setFormErrors(errors);
 
     if (Object.keys(errors).length === 0) {
-      // Aquí se enviaría el formulario
-      alert('Formulario enviado exitosamente. Nos contactaremos contigo pronto.');
-      setFormData({
-        nombre: '',
-        email: '',
-        telefono: '',
-        empresa: '',
-        sector: '',
-        empleados: '',
-        ventas: '',
-        timing: '',
-        descripcion: ''
-      });
+      try {
+        // Enviar formulario a la API de Vercel
+        const response = await fetch('/api/contact', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(formData),
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          // Redirigir a la página de éxito
+          window.location.href = '/success.html';
+        } else {
+          alert('Error al enviar el formulario. Por favor, intenta nuevamente.');
+        }
+      } catch (error) {
+        console.error('Error submitting form:', error);
+        alert('Error al enviar el formulario. Por favor, intenta nuevamente.');
+      }
     }
   };
 
@@ -332,7 +341,10 @@ const Index = () => {
               Cuéntanos sobre tu empresa y te contactaremos para una evaluación profesional gratuita
             </p>
             
-            <form onSubmit={handleFormSubmit} className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-8 animate-on-scroll">
+            <form 
+              onSubmit={handleFormSubmit} 
+              className="bg-gray-800/50 backdrop-blur-sm border border-gray-700 rounded-xl p-8 animate-on-scroll"
+            >
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label className="block text-sm font-medium mb-2">Nombre completo *</label>
