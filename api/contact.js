@@ -1,3 +1,5 @@
+import sgMail from '@sendgrid/mail';
+
 // Vercel serverless function to handle contact form submissions
 export default async function handler(req, res) {
   if (req.method !== 'POST') {
@@ -46,12 +48,11 @@ ${descripcion || 'No proporcionada'}
     `;
 
     // Send email using SendGrid
-    const sgMail = require('@sendgrid/mail');
     sgMail.setApiKey(process.env.SENDGRID_API_KEY);
     
     const msg = {
       to: 'contacto@atlaspartners.cl',
-      from: 'noreply@atlaspartners.cl', // You'll need to verify this domain in SendGrid
+      from: 'noreply@atlaspartners.cl', // Must be verified in SendGrid
       subject: 'Nueva solicitud de contacto - Atlas Partners',
       text: emailContent,
       html: emailContent.replace(/\n/g, '<br>')
