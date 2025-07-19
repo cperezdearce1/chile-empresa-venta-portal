@@ -529,7 +529,7 @@ const Index = () => {
                 </div>
                 <div className="flex items-center gap-2">
                   <Phone size={16} />
-                  +56 9 XXXX XXXX
+                  +56 9 5331 6765
                 </div>
                 <div className="flex items-center gap-2">
                   <MapPin size={16} />
@@ -554,7 +554,7 @@ const Index = () => {
 
       {/* WhatsApp Float Button */}
       <a
-        href="https://wa.me/56912345678?text=Hola,%20me%20interesa%20saber%20más%20sobre%20la%20compra%20de%20mi%20empresa"
+        href="https://wa.me/56953316765?text=Hola,%20me%20interesa%20saber%20más%20sobre%20la%20compra%20de%20mi%20empresa"
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full 
