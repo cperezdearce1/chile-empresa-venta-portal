@@ -554,7 +554,7 @@ const Index = () => {
 
       {/* WhatsApp Float Button */}
       <a
-        href="https://wa.me/56953316765?text=Hola,%20me%20interesa%20saber%20más%20sobre%20la%20compra%20de%20mi%20empresa"
+        href="https://wa.me/56953316765?text=Hola,%20tengo%20una%20empresa%20y%20me%20interesa%20saber%20más%20sobre%20el%20proceso%20de%20compra%20de%20Atlas%20Partners."
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white p-4 rounded-full 
